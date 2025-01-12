@@ -26,6 +26,7 @@ ssh blaze@192.168.1.91
 ```
 
 ## Install NVIDIA Jetpack Componments
+TODO: What are Jetpack Componments?
 ```
 cat /etc/nv_tegra_release
 sudo apt update
@@ -49,26 +50,71 @@ sudo apt update
 sudo apt install gh
 ```
 
-## Clone the "server" repo to Jetson
+## Clone the  Divinci "server" repo to Jetson
+TODO: Rename this GitHub repo to "LocalAppServer" since its only a local server? 
+Lets get the Divinci server up and runing for local development 
 ```
-TODO: Rename this GitHub repo?
 gh auth login
 cd Desktop
 gh repo clone DivinciApp/server
 cd server
 ```
 
-## Install Docker...
+## Install 3rd party OS info tool
+Install and display info about the OS to prepare for Docker install
+```
+sudo apt install neofetch
+neofetch
+uname -a
+```
+
+## Install Docker Engine (NOT Docker Desktop!!!)
+https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/desktop/setup/install/linux/
+For safety preface all docker commands with sudo in day to day use https://docs.docker.com/engine/install/linux-postinstall/
+```
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+# Install latest versions
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Verify Docker is working
+sudo docker run hello-world
+
+# Make sure Docker auto starts after system boots
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+```
 
 
-# OPTIONAL STEPS PREFORMED
-## Install Nano the best terminal text editior, where tabs are converted to spaces
+# OPTIONAL STEPS (Blaze Sanders Preferences) 
+## Install Nano 
+The best terminal text editior, where tabs are converted to spaces and you dont have to restart to exit like vim :)
 ```
 sudo apt install nano
+git config --global diff.tool nano
 ```
 
 ## Install Oh-my-ZSH
 TODO: Fix ".zshrc:source:80: no such file or directory: /home/blaze/.oh-my-zsh/oh-my-zsh.sh"
+The best shell for plugins (e.g. autocomplete, Sudo, MacOS, etc)
+https://travis.media/blog/top-10-oh-my-zsh-plugins-for-productive-developers/ 
+https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/macos
 ```
 cd 
 sudo apt install curl
