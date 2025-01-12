@@ -101,6 +101,21 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
 
+# Install Real VNC Server on Jetson Orin
+TODO: Easier then connecting to Blaze's Mac Mini using Real VNC and then SSHing into the Jetson?
+https://help.realvnc.com/hc/en-us/articles/360002253198-Installing-and-Removing-RealVNC-Connect#ubuntu-0-12
+https://help.realvnc.com/hc/en-us/articles/360002249677-Licensing-RealVNC-Connect
+
+TODO: Fix 
+dpkg: error processing archive VNC-Server-7.13.1-Linux-x64.deb (--install):
+ package architecture (amd64) does not match system (arm64)
+Errors were encountered while processing:
+ VNC-Server-7.13.1-Linux-x64.deb
+```
+cd Desktop
+wget -O VNC-Server-7.13.1-Linux-x64.deb "https://downloads.realvnc.com/download/file/vnc.files/VNC-Server-7.13.1-Linux-x64.deb?lai_vid=m1AOQnMNwCgr2&lai_sr=0-4&lai_sl=l"
+dpkg -i VNC-Server-7.13.1-Linux-x64.deb
+```
 
 # OPTIONAL STEPS (Blaze Sanders Preferences) 
 ## Install Nano 
