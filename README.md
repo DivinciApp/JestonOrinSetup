@@ -101,6 +101,13 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
 
+# Install No-IP Service 
+Gives Jeston a static IP address when on residental internet
+https://my.noip.com/dynamic-dns?mode=add
+```
+divinci-jetson-orin-1.ddns.net
+```
+
 # Install Real VNC Server on Jetson Orin
 TODO: Easier then connecting to Blaze's Mac Mini using Real VNC and then SSHing into the Jetson?
 https://help.realvnc.com/hc/en-us/articles/360002253198-Installing-and-Removing-RealVNC-Connect#ubuntu-0-12
