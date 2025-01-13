@@ -107,6 +107,24 @@ Do some very basic localhost debuggin in the terminal
 sudo apt-get install lynx
 ```
 
+# Install and startup PageKite
+Reverse proxy server to get localhost on the interner
+https://pagekite.net/support/quickstart/
+```
+# Dowload PageKite and auto install to /usr/local/bin/pagekite.py
+curl -s https://pagekite.net/pk/ |sudo bash
+
+pagekite.py --signup
+pagekite.py 8080 divinci.pagekite.me &
+
+# To stop PageKite, find running process ID or just kill all python3 processes :)
+ps
+kill -9 XXXXX
+pkill python3
+```
+
+# ITEMS BELOW ARE STILL ON TODO LIST!!!
+
 # Configure X-11 forwarding in SSH
 Transmit Linux GUI via X-11 over SSH. Seee https://some-natalie.dev/blog/ssh-x11-forwarding/
 ```
