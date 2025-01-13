@@ -111,7 +111,7 @@ sudo apt-get install lynx
 Reverse proxy server to get localhost on the interner
 https://pagekite.net/support/quickstart/
 ```
-# Dowload PageKite and auto install to /usr/local/bin/pagekite.py
+# Dowload PageKite, auto install to /usr/local/bin/pagekite.py and save settings to /home/blaze/.pagekite.rc
 curl -s https://pagekite.net/pk/ |sudo bash
 
 pagekite.py --signup
