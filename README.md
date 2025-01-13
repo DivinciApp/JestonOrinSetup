@@ -101,6 +101,47 @@ sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 ```
 
+# Install Terminal Baser Browser
+Do some very basic localhost debuggin in the terminal
+```
+sudo apt-get install lynx
+```
+
+# Configure X-11 forwarding in SSH
+Transmit Linux GUI via X-11 over SSH. Seee https://some-natalie.dev/blog/ssh-x11-forwarding/
+```
+# On the Jetson Orin
+nano /etc/ssh/sshd_config
+
+# Edit sshd_config with the following settings
+> Host *
+>    ForwardX11 yes
+>
+> AllowTcpForwarding yes
+> X11Forwarding yes
+> X11DisplayOffset 10
+> X11UseLocalhost yes
+
+# Restart SSH daemon
+sudo systemctl restart sshd
+```
+
+```
+# On MacOS install XQuartz, an open-source X11 server and then log out and back in for it to be available
+brew install --cask xquartz
+
+# Test connection to X-11 SSH session
+ssh -i ~/.ssh/private-key -p 22 -X blaze@192.168.1.91 
+
+nano ~/.ssh/config
+> Host DivinciJetson
+>    User blaze
+>    Port 22
+>    HostName 192.168.1.91 
+>    IdentityFile ~/.ssh/private-key
+>    ForwardX11 yes
+```
+
 # Install No-IP Service 
 Gives Jeston a static IP address when on residental internet
 https://my.noip.com/dynamic-dns?mode=add
