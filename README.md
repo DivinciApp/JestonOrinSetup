@@ -126,9 +126,10 @@ pkill python3
 
 # Configure X-11 forwarding in SSH
 Transmit Linux GUI via X-11 over SSH. 
-Guide for server side (Jetson Orin) configuration: 
+> Guide for server side (Jetson Orin) configuration:
 > https://some-natalie.dev/blog/ssh-x11-forwarding/
-ChatGPT suggestion for client side (MacOS) configure:
+>
+> ChatGPT suggestion for client side (MacOS) configure:
 > https://chatgpt.com/share/6787b5f4-2e2c-8007-a864-c602cad4e456
 ```
 # On the Jetson Orin
@@ -139,6 +140,14 @@ AllowTcpForwarding yes
 X11Forwarding yes
 X11DisplayOffset 10
 X11UseLocalhost yes
+
+# The xauth tool is required for X11 forwarding. Ensure it is installed on the remote server.
+sudo apt update
+sudo apt install xauth
+export DISPLAY=:10
+xauth generate $DISPLAY . trusted
+ls -l ~/.Xauthority
+chown blaze:blaze ~/.Xauthority
 
 # Restart SSH daemon
 sudo systemctl restart sshd
@@ -159,6 +168,7 @@ Host DivinciJetson
     HostName 192.168.1.91 
     IdentityFile ~/.ssh/private-key
     ForwardX11 yes
+    ForwardX11Trusted yes
 ```
 
 # Install No-IP Service 
