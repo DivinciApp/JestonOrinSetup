@@ -1,7 +1,5 @@
 # JestonOrinSetup
-Hardware and software setup of the NVIDIA Jetson AGX Orin to use as bare metal AI server running local models like LLAMA 3.0 using Ollama.
-
-https://developer.nvidia.com/embedded/learn/get-started-jetson-agx-orin-devkit
+Hardware and software setup of the NVIDIA Jetson AGX Orin to use as bare metal AI server running local models like LLAMA 3.0 using Ollama. See https://developer.nvidia.com/embedded/learn/get-started-jetson-agx-orin-devkit
 
 ## Slow Serial Connection 
 From MacOS to Jetson using the USB-A to USB-C cable in NVIDIA box. Replace "14133200001053" with the value the "ls /dev/cu.usbmodem*" command presents.
@@ -26,7 +24,7 @@ ssh blaze@192.168.1.91
 ```
 
 ## Install NVIDIA Jetpack Componments
-TODO: What are Jetpack Componments?
+NVIDIA JetPack is a software development kit (SDK) for building AI, computer vision, and high-performance computing applications on NVIDIA Jetson platforms. It provides the essential tools, libraries, and frameworks optimized for NVIDIA GPUs, making it easier to develop and deploy AI-powered applications.
 ```
 cat /etc/nv_tegra_release
 sudo apt update
@@ -50,8 +48,7 @@ sudo apt update
 sudo apt install gh
 ```
 
-## Clone the  Divinci "server" repo to Jetson
-TODO: Rename this GitHub repo to "LocalAppServer" since its only a local server? 
+## Clone the Divinci "server" repo to Jetson
 Lets get the Divinci server up and runing for local development 
 ```
 gh auth login
@@ -59,6 +56,8 @@ cd Desktop
 gh repo clone DivinciApp/server
 cd server
 ```
+TODO: Rename this GitHub repo to "LocalAppServer" since its only a local server? 
+
 
 ## Install 3rd party OS info tool
 Install and display info about the OS to prepare for Docker install
@@ -126,19 +125,20 @@ pkill python3
 # ITEMS BELOW ARE STILL ON TODO LIST!!!
 
 # Configure X-11 forwarding in SSH
-Transmit Linux GUI via X-11 over SSH. Seee https://some-natalie.dev/blog/ssh-x11-forwarding/
+Transmit Linux GUI via X-11 over SSH. 
+Guide for server side (Jetson Orin) configuration: 
+> https://some-natalie.dev/blog/ssh-x11-forwarding/
+ChatGPT suggestion for client side (MacOS) configure:
+> https://chatgpt.com/share/6787b5f4-2e2c-8007-a864-c602cad4e456
 ```
 # On the Jetson Orin
 nano /etc/ssh/sshd_config
 
 # Edit sshd_config with the following settings
-> Host *
->    ForwardX11 yes
->
-> AllowTcpForwarding yes
-> X11Forwarding yes
-> X11DisplayOffset 10
-> X11UseLocalhost yes
+AllowTcpForwarding yes
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes
 
 # Restart SSH daemon
 sudo systemctl restart sshd
@@ -148,16 +148,17 @@ sudo systemctl restart sshd
 # On MacOS install XQuartz, an open-source X11 server and then log out and back in for it to be available
 brew install --cask xquartz
 
-# Test connection to X-11 SSH session
+# Test X11 SSH session
 ssh -i ~/.ssh/private-key -p 22 -X blaze@192.168.1.91 
 
+# Configure X11 SSH connection for long term use
 nano ~/.ssh/config
-> Host DivinciJetson
->    User blaze
->    Port 22
->    HostName 192.168.1.91 
->    IdentityFile ~/.ssh/private-key
->    ForwardX11 yes
+Host DivinciJetson
+    User blaze
+    Port 22
+    HostName 192.168.1.91 
+    IdentityFile ~/.ssh/private-key
+    ForwardX11 yes
 ```
 
 # Install No-IP Service 
